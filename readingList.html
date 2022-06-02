@@ -20,6 +20,9 @@
     <div class="layout" id="app">
       <!-- aside -->
       <div class="aside">
+        
+        <img src="./img/logo.png" class="logo" />
+        
         <el-link class="item studBud">
           <span>Kai's StudBud </span>
         </el-link>
@@ -172,35 +175,35 @@
               type: [
                 {
                   required: true,
-                  message: "请选择",
+                  message: "Please select",
                   trigger: "change",
                 },
               ],
               name: [
                 {
                   required: true,
-                  message: "请输入",
+                  message: "Please enter",
                   trigger: "blur",
                 },
               ],
               author: [
                 {
                   required: true,
-                  message: "请输入",
+                  message: "Please enter",
                   trigger: "blur",
                 },
               ],
               status: [
                 {
                   required: true,
-                  message: "请选择",
+                  message: "Please enter",
                   trigger: "change",
                 },
               ],
               link: [
                 {
                   required: true,
-                  message: "请输入",
+                  message: "Please enter",
                   trigger: "blur",
                 },
               ],
@@ -223,7 +226,7 @@
           submitForm(formName) {
             this.$refs[formName].validate((valid) => {
               if (valid) {
-                this.$message.success("保存成功！");
+                this.$message.success("Save successfully！");
                 this.tableData.push({ ...this.ruleForm });
                 this.resetForm(formName);
               } else {
