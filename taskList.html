@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>taskList</title>
+  <link rel="stylesheet" href="./css/common.css" />
+  <link rel="stylesheet" href="./css/taskList.css" />
+
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+</head>
+
+<body>
+  <!-- layout -->
+  <div class="layout" id="app">
+    <!-- aside -->
+    <div class="aside">
+      
+      <img src="./img/logo.png" class="logo" />
+      
+      <el-link class="item studBud">
+        <span>Kai's StudBud </span>
+      </el-link>
+      <el-link class="item">
+        <span>
+          <i class="el-icon-search"></i>
+          Quick Find </span>
+      </el-link>
+      <el-link class="item">
+        <i class="el-icon-pie-chart"></i>
+        <span>All Updetas </span>
+      </el-link>
+      <el-link class="item">
+        <i class="el-icon-magic-stick"></i>
+        <span>setting & Membes</span>
+      </el-link>
+      <el-link type="primary" href="./taskList.html" class="item">
+        <span>taskList</span>
+      </el-link>
+      <el-link type="primary" href="./stopwatchTimes.html" class="item">
+        <span>stopwatchTimes</span>
+      </el-link>
+      <el-link type="primary" href="./readingList.html" class="item active">
+        <span>readingList</span>
+      </el-link>
+      <el-link type="primary" href="./musicPlayer.html" class="item">
+        <span>musicPlayer</span>
+      </el-link>
+      <el-link type="primary" href="./calendar.html" class="item">
+        <span>calendar</span>
+      </el-link>
+    </div>
+
+    <!-- main -->
+    <div class="main">
+      <div class="title">Priority Rating</div>
+
+      <div class="title1">√ Task List</div>
+      <div class="tips">
+        <p>Use this template to track your personal tasks</p>
+        <p>Click + New to create a new task directv on this board</p>
+        <p>Click an existing task to add additional context or subtasks</p>
+      </div>
+
+      <div class="top">
+        <el-tag @click="dialogFormVisible = true">New</el-tag>
+      </div>
+      <el-table :data="tableData" border style="width: 100%">
+        <el-table-column prop="name" label="Name"> </el-table-column>
+        <el-table-column prop="created" label="Date created">
+          <template slot-scope="scope">
+            {{ scope.row.created | times }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="status" label="Status">
+          <template slot-scope="scope">
+            <el-tag type="danger" v-if="scope.row.status == 1">Doing</el-tag>
+            <el-tag v-else>to do</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="remarks" label="Remarks"> </el-table-column>
+      </el-table>
+    </div>
+
+    <el-dialog title="Add" center :visible.sync="dialogFormVisible" :close-on-click-modal="false"
+      :close-on-press-escape="false" :show-close="false">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+        <el-form-item label="Name：" :label-width="formLabelWidth" prop="name">
+          <el-input v-model="ruleForm.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Date created" :label-width="formLabelWidth" prop="created">
+          <el-date-picker v-model="ruleForm.created" type="date" placeholder="Select date">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="Status：" :label-width="formLabelWidth" prop="status">
+          <el-radio-group v-model="ruleForm.status">
+            <el-radio :label="1">Doing</el-radio>
+            <el-radio :label="2">to do</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="Remarks：" :label-width="formLabelWidth" prop="remarks">
+          <el-input v-model="ruleForm.remarks" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="resetForm('ruleForm')">cancle</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">save</el-button>
+      </div>
+    </el-dialog>
+  </div>
+  <!-- 必须先引入vue，  后使用element-ui -->
+  <script src="./js/vue.js"></script>
+  <!-- 引入element 的组件库-->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          dialogFormVisible: false,
+          formLabelWidth: "120px",
+          ruleForm: {},
+          rules: {
+            name: [
+              {
+                required: true,
+                message: "Please enter",
+                trigger: "blur",
+              },
+            ],
+            created: [
+              {
+                required: true,
+                message: "Please select",
+                trigger: "blur",
+              },
+            ],
+            status: [
+              {
+                required: true,
+                message: "Please select",
+                trigger: "change",
+              },
+            ],
+            remarks: [
+              {
+                required: true,
+                message: "Please enter",
+                trigger: "blur",
+              },
+            ],
+          },
+          tableData: [],
+        };
+      },
+      filters: {
+        times(val) {
+          console.log(val)
+          let a = new Date(val)
+          let b = a + ''
+          let c = b.split(' ')
+
+          return `${c[1]} ${c[2]},${c[3]}`
+        }
+      },
+      methods: {
+        submitForm(formName) {
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              this.$message.success("Save successfully！");
+              this.tableData.push({ ...this.ruleForm });
+              this.resetForm(formName);
+            } else {
+              console.log("error submit!!");
+              return false;
+            }
+          });
+        },
+        resetForm(formName) {
+          this.dialogFormVisible = false;
+          this.$refs[formName].resetFields();
+        },
+      },
+    });
+
+  </script>
+</body>
+
+</html>
