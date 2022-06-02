@@ -1,13 +1,15 @@
 ### Menu bar
-![Prototype(left) and Mockup(right)](/Img/1.png)
+>![Prototype(left) and Mockup(right)](/Img/1.png)
+>
 >Add Logo in the menu bar, and improve the menu bar more formally.
 >
 ### Task List
 >![Prototype(left) and Mockup(right)](/Img/2.png)
+>
 >Add information about the task list to make the web more tidy. Create a new task by clicking "New". It will be displayed next.
 >
 >![Click "New"](/Img/3.png)
->Add the task to be completed (name, time, priority.)
+> Add the task to be completed (name, time, priority.)
 >
 ### Stopwatch Times
 >![Prototype(left) and Mockup(right)](/Img/4.png)
@@ -19,6 +21,7 @@
 >
 ### Reading List
 >![Prototype(left) and Mockup(right)](/Img/6.png)
+>
 >Add information about the reading list to make the web more tidy. Create a new task by clicking "New". It will be displayed next.
 >
 >![Click "New"](/Img/7.png)
@@ -48,7 +51,10 @@
 
 ### Comment
 >This web app is for learning . Users will be alerted by adding tasks to their task list. Users can also use timing mode to assist in monitoring a role to urge learning. For music player, users can choose their favorite music to relax after completing the study.
->
+
+<br>
+
+
 ### References
 ####   For music
 >1. http://music.163.com/song?id=1404511131&userid=124008189
