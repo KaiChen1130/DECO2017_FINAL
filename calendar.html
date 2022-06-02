@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>calendar</title>
+    <link rel="stylesheet" href="./css/common.css" />
+
+    <!-- 引入样式 -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+  </head>
+
+  <body>
+    <!-- layout -->
+    <div class="layout" id="app">
+      <!-- aside -->
+      <div class="aside">
+        <el-link class="item studBud">
+          <span>Kai's StudBud </span>
+        </el-link>
+        <el-link class="item">
+          <span>
+            <i class="el-icon-search"></i>
+            Quick Find </span>
+        </el-link>
+        <el-link class="item">
+          <i class="el-icon-pie-chart"></i>
+          <span>All Updetas </span>
+        </el-link>
+        <el-link class="item">
+          <i class="el-icon-magic-stick"></i>
+          <span>setting & Membes</span>
+        </el-link>
+        <el-link type="primary" href="./taskList.html" class="item">
+          <span>taskList</span>
+        </el-link>
+        <el-link type="primary" href="./stopwatchTimes.html" class="item">
+          <span>stopwatchTimes</span>
+        </el-link>
+        <el-link type="primary" href="./readingList.html" class="item active">
+          <span>readingList</span>
+        </el-link>
+        <el-link type="primary" href="./musicPlayer.html" class="item">
+          <span>musicPlayer</span>
+        </el-link>
+        <el-link type="primary" href="./calendar.html" class="item">
+          <span>calendar</span>
+        </el-link>
+      </div>
+
+      <!-- main -->
+      <div class="main">
+        <div class="title">Calendar</div>
+
+        <el-calendar />
+      </div>
+    </div>
+    <!-- 必须先引入vue，  后使用element-ui -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入element 的组件库-->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            tableData: [
+              {
+                number: 1,
+                name: "2",
+                author: 3,
+              },
+            ],
+          };
+        },
+        methods: {},
+      });
+    </script>
+  </body>
+</html>
