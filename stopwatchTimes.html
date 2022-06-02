@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>stopwatchTimes</title>
+  <link rel="stylesheet" href="./css/common.css" />
+  <link rel="stylesheet" href="./css/stopwatchTimes.css" />
+
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+</head>
+
+<body>
+  <!-- layout -->
+  <div class="layout" id="app">
+    <!-- aside -->
+    <div class="aside">
+
+      <el-link class="item studBud">
+        <span>Kai's StudBud </span>
+      </el-link>
+      <el-link class="item">
+        <span>
+          <i class="el-icon-search"></i>
+          Quick Find </span>
+      </el-link>
+      <el-link class="item">
+        <i class="el-icon-pie-chart"></i>
+        <span>All Updetas </span>
+      </el-link>
+      <el-link class="item">
+        <i class="el-icon-magic-stick"></i>
+        <span>setting & Membes</span>
+      </el-link>
+      <el-link type="primary" href="./taskList.html" class="item">
+        <span>taskList</span>
+      </el-link>
+      <el-link type="primary" href="./stopwatchTimes.html" class="item">
+        <span>stopwatchTimes</span>
+      </el-link>
+      <el-link type="primary" href="./readingList.html" class="item active">
+        <span>readingList</span>
+      </el-link>
+      <el-link type="primary" href="./musicPlayer.html" class="item">
+        <span>musicPlayer</span>
+      </el-link>
+      <el-link type="primary" href="./calendar.html" class="item">
+        <span>calendar</span>
+      </el-link>
+    </div>
+
+    <!-- main -->
+    <div class="main">
+      <div class="title">Stopwatch Times</div>
+
+      <div class="con">
+
+        <div class="tips">Pomodoro Timer</div>
+        <div class="time">{{times}}</div>
+
+        <div class="btns">
+          <el-button type="primary" @click="start">Start</el-button>
+          <el-button type="danger" @click="stop">Stop</el-button>
+          <el-button type="warning" @click="reset">Reset</el-button>
+        </div>
+
+
+        <div class="sm">Default times = 25 mins on, 5 mins off (x4) then 30 mins break</div>
+      </div>
+    </div>
+  </div>
+  <!-- 必须先引入vue，  后使用element-ui -->
+  <script src="./js/vue.js"></script>
+  <!-- 引入element 的组件库-->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          time: 2 * 60 * 60 + 30 * 60,
+          aTime: 25 * 60,
+          bTime: 30 * 60,
+          count: 4,
+          lang: 0
+        };
+      },
+      computed: {
+        times() {
+          const a = Math.floor(this.time / 60 / 60)
+          const b = Math.floor(this.time / 60 % 60)
+          const c = this.time - a * 60 * 60 - b * 60
+          return `${a > 9 ? a : '0' + a}:${b > 9 ? b : '0' + b}:${c > 9 ? c : '0' + c}`
+        }
+      },
+      methods: {
+        start() {
+          clearInterval(this.dsq)
+          this.$message.success("计时开始！");
+          this.dsq = setInterval(_ => {
+            this.time--
+            this.lang++
+            if (!this.time) {
+              this.stop()
+            }
+            if (this.lang > this.aTime) {
+              this.lang = 0
+              this.count--
+              clearInterval(this.dsq)
+              if (this.count) {
+                this.$message.success('休息5分钟！');
+                setTimeout(this.start, 5 * 60 * 1000)
+              } else {
+                this.$message.success('休息30分钟！');
+                this.count = 4
+                setTimeout(this.start, 30 * 60 * 1000)
+              }
+            }
+          }, 1000)
+        },
+        stop() {
+          clearInterval(this.dsq)
+          this.$message.error('计时结束！');
+        },
+        reset() {
+          clearInterval(this.dsq)
+          this.time = 2 * 60 * 60 + 30 * 60
+        }
+      },
+    });
+  </script>
+</body>
+
+</html>
