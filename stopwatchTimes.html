@@ -18,6 +18,8 @@
   <div class="layout" id="app">
     <!-- aside -->
     <div class="aside">
+      
+      <img src="./img/logo.png" class="logo" />
 
       <el-link class="item studBud">
         <span>Kai's StudBud </span>
@@ -100,7 +102,7 @@
       methods: {
         start() {
           clearInterval(this.dsq)
-          this.$message.success("计时开始！");
+          this.$message.success("Timer start！");
           this.dsq = setInterval(_ => {
             this.time--
             this.lang++
@@ -112,10 +114,10 @@
               this.count--
               clearInterval(this.dsq)
               if (this.count) {
-                this.$message.success('休息5分钟！');
+                this.$message.success('5 minutes break！');
                 setTimeout(this.start, 5 * 60 * 1000)
               } else {
-                this.$message.success('休息30分钟！');
+                this.$message.success('30 minutes break！');
                 this.count = 4
                 setTimeout(this.start, 30 * 60 * 1000)
               }
@@ -124,7 +126,7 @@
         },
         stop() {
           clearInterval(this.dsq)
-          this.$message.error('计时结束！');
+          this.$message.error('End of time！');
         },
         reset() {
           clearInterval(this.dsq)
