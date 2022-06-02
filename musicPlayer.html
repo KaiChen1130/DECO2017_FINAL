@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>musicPlayer</title>
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/musicPlayer.css" />
+
+    <!-- 引入样式 -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+  </head>
+
+  <body>
+    <!-- layout -->
+    <div class="layout" id="app">
+      <!-- aside -->
+      <div class="aside">
+        <el-link class="item studBud">
+          <span>Kai's StudBud </span>
+        </el-link>
+        <el-link class="item">
+          <span>
+            <i class="el-icon-search"></i>
+            Quick Find
+          </span>
+        </el-link>
+        <el-link class="item">
+          <i class="el-icon-pie-chart"></i>
+          <span>All Updetas </span>
+        </el-link>
+        <el-link class="item">
+          <i class="el-icon-magic-stick"></i>
+          <span>setting & Membes</span>
+        </el-link>
+        <el-link type="primary" href="./taskList.html" class="item">
+          <span>taskList</span>
+        </el-link>
+        <el-link type="primary" href="./stopwatchTimes.html" class="item">
+          <span>stopwatchTimes</span>
+        </el-link>
+        <el-link type="primary" href="./readingList.html" class="item active">
+          <span>readingList</span>
+        </el-link>
+        <el-link type="primary" href="./musicPlayer.html" class="item">
+          <span>musicPlayer</span>
+        </el-link>
+        <el-link type="primary" href="./calendar.html" class="item">
+          <span>calendar</span>
+        </el-link>
+      </div>
+
+      <!-- main -->
+      <div class="main">
+        <div class="title">Music Player</div>
+
+        <el-table :data="mp3List" style="width: 100%">
+          <el-table-column type="index" width="50"></el-table-column>
+          <el-table-column prop="name" label="Name"> </el-table-column>
+          <el-table-column prop="author" label="Author"> </el-table-column>
+        </el-table>
+
+        <div class="con">
+          <img src="./img/icon-33.png" @click="prev" />
+          <img
+            :src="isPlay ? './img/icon-42.png' : './img/icon-34.png'"
+            @click="play"
+          />
+          <img src="./img/icon-35.png" @click="next" />
+        </div>
+
+        <audio
+          ref="videoPlayer"
+          :src="videoSrc"
+          ata-wf-ignore="true"
+          style="display: none"
+        ></audio>
+      </div>
+    </div>
+    <!-- 必须先引入vue，  后使用element-ui -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入element 的组件库-->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            isPlay: false,
+            lang: 0,
+            mp3List: [
+              {
+                name: "いつも何度でも",
+                url: "./mp3/3.mp3",
+                author: "宗次郎",
+              },
+              {
+                name: "The Rain (From ＂Kikujiro＂ Soundtrack)",
+                url: "./mp3/1.mp3",
+                author: "久石譲",
+              },
+              {
+                name: "晚安",
+                url: "./mp3/2.mp3",
+                author: "鹿先森乐队",
+              },
+            ],
+          };
+        },
+        computed: {
+          videoSrc() {
+            return this.mp3List[this.lang].url;
+          },
+        },
+        methods: {
+          play() {
+            this.isPlay = !this.isPlay;
+            this.$refs.videoPlayer.paused === true
+              ? this.$refs.videoPlayer.play()
+              : this.$refs.videoPlayer.pause();
+          },
+          prev() {
+            if (this.lang) {
+              this.lang--;
+            } else {
+              this.lang = 2;
+            }
+            this.isPlay = true;
+            setTimeout((_) => {
+              this.$refs.videoPlayer.paused === true
+                ? this.$refs.videoPlayer.play()
+                : this.$refs.videoPlayer.pause();
+            });
+          },
+          next() {
+            if (this.lang < 2) {
+              this.lang++;
+            } else {
+              this.lang = 0;
+            }
+            this.isPlay = true;
+
+            setTimeout((_) => {
+              this.$refs.videoPlayer.paused === true
+                ? this.$refs.videoPlayer.play()
+                : this.$refs.videoPlayer.pause();
+            });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
