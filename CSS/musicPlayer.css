@@ -1,0 +1,15 @@
+.title{
+    margin-bottom: 60px;
+}
+
+.con{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.con img {
+    width: 40px;
+    margin: 0 20px 20px;
+}
